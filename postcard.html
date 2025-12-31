@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Willkommen Valentina!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Lora', serif; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        
+        .perspective-1000 { perspective: 1000px; }
+        .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+        .transform-style-3d { transform-style: preserve-3d; transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        /* Manual flip state */
+        .flipped { transform: rotateY(180deg) !important; animation: none !important; }
+
+        /* Auto-flip animation */
+        @keyframes autoFlip {
+            0%, 15% { transform: rotateY(0deg); }
+            35%, 65% { transform: rotateY(180deg); }
+            85%, 100% { transform: rotateY(0deg); }
+        }
+
+        .animate-autoflip {
+            animation: autoFlip 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; padding: 0 !important; }
+            .postcard-container {
+                width: 170mm !important;
+                height: 110mm !important;
+                margin: 10mm auto !important;
+                box-shadow: none !important;
+                border: 1px solid #eee !important;
+                cursor: default !important;
+            }
+            .voucher-container {
+                width: 170mm !important;
+                margin: 10mm auto !important;
+                box-shadow: none !important;
+                border: 2px solid #fce7f3 !important;
+                page-break-before: always;
+            }
+            .print-side {
+                position: relative !important;
+                display: block !important;
+                box-shadow: none !important;
+                transform: none !important;
+            }
+            .rotate-y-180 { transform: none !important; }
+            .backface-hidden { backface-visibility: visible !important; }
+        }
+    </style>
+</head>
+<body class="bg-pink-50 min-h-screen flex flex-col items-center justify-center p-4 sm:p-8">
+
+    <div class="max-w-4xl w-full text-center mb-8 no-print">
+        <h1 class="text-3xl md:text-5xl font-bold text-pink-800 mb-2">Willkommen & Bem-vinda!</h1>
+        <p class="text-pink-600 italic">The card flips automatically. Click it to toggle manually.</p>
+    </div>
+
+    <!-- Main Container -->
+    <div class="flex flex-col items-center gap-8 w-full max-w-[600px]">
+        
+        <!-- Postcard -->
+        <div class="relative w-full aspect-[3/2] cursor-pointer perspective-1000 postcard-container" onclick="toggleFlip()">
+            <div id="cardInner" class="relative w-full h-full transform-style-3d animate-autoflip">
+                
+                <!-- Front -->
+                <div class="absolute inset-0 w-full h-full backface-hidden rounded-2xl shadow-2xl overflow-hidden border-8 border-white print-side">
+                    <img src="image_2.png" alt="Baby Valentina" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&q=80&w=800'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-pink-900/40 to-transparent flex items-end justify-center pb-12 text-center">
+                        <div>
+                            <h2 class="text-white text-5xl font-bold drop-shadow-lg mb-2">Valentina</h2>
+                            <div class="flex items-center justify-center gap-4 text-white/90 font-medium text-sm">
+                                <span>🇩🇪 DEUTSCHLAND</span>
+                                <span class="text-pink-200">●</span>
+                                <span>🇧🇷 BRASIL</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Back -->
+                <div class="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-2xl shadow-2xl bg-white border-8 border-pink-100 p-6 md:p-10 flex flex-col print-side">
+                    <div class="flex justify-between items-start mb-4 text-left">
+                        <div>
+                            <svg class="text-pink-400 mb-1" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                            <h2 class="text-xl font-bold text-pink-900 leading-tight">Our Global Treasure</h2>
+                            <p class="text-[10px] text-pink-400 uppercase tracking-[0.2em]">Eine kleine Weltbürgerin</p>
+                        </div>
+                        <div class="w-14 h-18 border-2 border-dashed border-pink-200 rounded flex flex-col items-center justify-center text-pink-200 text-[8px] uppercase tracking-widest text-center leading-none">
+                            <span>Place</span><span>Stamp</span><span>Here</span>
+                        </div>
+                    </div>
+
+                    <div class="flex-grow grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                        <div class="border-r-0 md:border-r border-pink-100 pr-0 md:pr-4 space-y-3">
+                            <div class="space-y-2">
+                                <p class="text-gray-700 text-sm italic">"Willkommen auf der Welt, süße Valentina! Wir freuen uns so sehr, dich kennenzulernen."</p>
+                                <p class="text-pink-700 text-sm italic font-medium">"Bem-vinda ao mundo, querida Valentina! Estamos muito felizes por você estar aqui."</p>
+                            </div>
+                            <div class="text-xs text-pink-800 space-y-1">
+                                <p><b>Valentina</b></p>
+                                <p>Born: December 2025</p>
+                                <p>Half German, Half Brazilian</p>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col space-y-4">
+                            <div class="border-b border-gray-200 pb-1">
+                                <span class="text-[10px] uppercase text-gray-400 block">From:</span>
+                                <p class="text-sm font-bold text-pink-900">
+                                    Ronald, Karlheinz, Hung & Elke
+                                </p>
+                            </div>
+                            <div class="border-b border-gray-200 pb-1">
+                                <span class="text-[10px] uppercase text-gray-400 block">To:</span>
+                                <p class="text-sm font-bold text-pink-900 mt-1">
+                                    Nils & Hana
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Voucher -->
+        <div class="w-full bg-white border-2 border-pink-200 rounded-2xl p-6 shadow-lg flex flex-col md:flex-row items-center gap-6 relative overflow-hidden voucher-container">
+            <div class="absolute top-0 left-0 w-2 h-full bg-pink-400"></div>
+            <div class="flex-shrink-0 bg-gray-100 p-4 rounded-xl border border-gray-200 flex flex-col items-center">
+                <p class="text-[10px] font-bold text-pink-700 uppercase tracking-widest mb-2">Amazon Gift</p>
+                <div class="bg-white p-2 rounded shadow-inner">
+                    <svg width="150" height="40" viewBox="0 0 200 40"><rect width="2" height="40" x="0"/><rect width="1" height="40" x="4"/><rect width="3" height="40" x="7"/><rect width="1" height="40" x="12"/><rect width="2" height="40" x="15"/><rect width="4" height="40" x="20"/><rect width="1" height="40" x="26"/><rect width="2" height="40" x="30"/><rect width="3" height="40" x="35"/><rect width="1" height="40" x="40"/><rect width="2" height="40" x="43"/><rect width="4" height="40" x="48"/><rect width="1" height="40" x="55"/><rect width="2" height="40" x="58"/><rect width="3" height="40" x="62"/><rect width="1" height="40" x="67"/><rect width="2" height="40" x="70"/><rect width="4" height="40" x="75"/><rect width="1" height="40" x="82"/><rect width="2" height="40" x="85"/><rect width="3" height="40" x="89"/><rect width="1" height="40" x="95"/><rect width="2" height="40" x="98"/><rect width="4" height="40" x="103"/><rect width="1" height="40" x="110"/><rect width="2" height="40" x="113"/><rect width="3" height="40" x="117"/><rect width="1" height="40" x="122"/><rect width="2" height="40" x="125"/><rect width="4" height="40" x="130"/><rect width="1" height="40" x="137"/><rect width="2" height="40" x="140"/><rect width="3" height="40" x="144"/><rect width="1" height="40" x="149"/><rect width="2" height="40" x="152"/><rect width="4" height="40" x="157"/><rect width="1" height="40" x="164"/><rect width="2" height="40" x="167"/><rect width="3" height="40" x="171"/><rect width="1" height="40" x="176"/><rect width="2" height="40" x="179"/><rect width="4" height="40" x="184"/><rect width="1" height="40" x="191"/><rect width="2" height="40" x="194"/><rect width="2" height="40" x="198"/></svg>
+                </div>
+                <span class="text-[8px] font-mono text-gray-500 mt-2">VAL-ENT-INA-100</span>
+            </div>
+            <div class="text-left flex-grow">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-xl font-bold text-pink-900 italic">For Valentina</h3>
+                    <span class="text-2xl font-black text-pink-600">€ 100,00</span>
+                </div>
+                <p class="text-sm text-gray-600 mb-4 italic">A little something to help welcome Valentina into her new home.</p>
+                <div class="text-[10px] text-gray-400 uppercase tracking-widest border-t border-pink-50 pt-2 text-wrap">From Ronald, Karlheinz, Hung & Elke</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="mt-12 flex flex-wrap justify-center gap-4 no-print">
+        <button id="toggleAnimBtn" onclick="toggleAnimation()" class="bg-pink-100 text-pink-700 hover:bg-pink-200 px-6 py-3 rounded-full font-bold shadow-sm transition-all active:scale-95">Pause Animation</button>
+        <button onclick="toggleFlip()" class="bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-full font-bold shadow-lg transition-all active:scale-95">Manual Flip</button>
+        <button onclick="window.print()" class="bg-white text-pink-500 border-2 border-pink-500 hover:bg-pink-50 px-8 py-3 rounded-full font-bold shadow-md transition-all active:scale-95">Save & Print</button>
+    </div>
+
+    <script>
+        const cardInner = document.getElementById('cardInner');
+        const toggleAnimBtn = document.getElementById('toggleAnimBtn');
+        let isAnimating = true;
+
+        function toggleFlip() {
+            // Stop animation when manual flip is used
+            if (isAnimating) toggleAnimation();
+            cardInner.classList.toggle('flipped');
+        }
+
+        function toggleAnimation() {
+            if (isAnimating) {
+                cardInner.classList.remove('animate-autoflip');
+                toggleAnimBtn.innerText = 'Resume Animation';
+                toggleAnimBtn.classList.remove('bg-pink-100', 'text-pink-700');
+                toggleAnimBtn.classList.add('bg-pink-200', 'text-pink-800');
+            } else {
+                cardInner.classList.add('animate-autoflip');
+                cardInner.classList.remove('flipped');
+                toggleAnimBtn.innerText = 'Pause Animation';
+                toggleAnimBtn.classList.add('bg-pink-100', 'text-pink-700');
+                toggleAnimBtn.classList.remove('bg-pink-200', 'text-pink-800');
+            }
+            isAnimating = !isAnimating;
+        }
+    </script>
+</body>
+</html>
